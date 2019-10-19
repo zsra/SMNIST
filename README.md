@@ -1,0 +1,2 @@
+# SMNIST
+SMNIST for Dogs
