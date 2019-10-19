@@ -1,2 +1,2 @@
 # SMNIST
-SMNIST for Dogs
+Android application for testing dogs numerical functions.
