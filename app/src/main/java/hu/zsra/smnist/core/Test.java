@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Test implements ITest {
 
-    private int ChossedMoreSnackNumber;
+    private int ChosedMoreSnackNumber;
 
     public Test(){
         this.ChossedMoreSnackNumber = 0;
@@ -26,11 +26,11 @@ public class Test implements ITest {
         return result;
     }
 
-    public void setChossedMoreSnackNumber(int chossedMoreSnackNumber) {
-        ChossedMoreSnackNumber = chossedMoreSnackNumber;
+    public void setChosedMoreSnackNumber(int chosedMoreSnackNumber) {
+        ChosedMoreSnackNumber = chosedMoreSnackNumber;
     }
 
-    public int getChossedMoreSnackNumber(){
-        return this.ChossedMoreSnackNumber;
+    public int getChosedMoreSnackNumber(){
+        return this.ChosedMoreSnackNumber;
     }
 }
