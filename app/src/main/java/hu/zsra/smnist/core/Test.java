@@ -7,7 +7,7 @@ public class Test implements ITest {
     private int ChosedMoreSnackNumber;
 
     public Test(){
-        this.ChossedMoreSnackNumber = 0;
+        this.ChosedMoreSnackNumber = 0;
     }
 
     @Override
