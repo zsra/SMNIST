@@ -1,36 +1,68 @@
 package hu.zsra.smnist.core;
 
-import java.util.Random;
+/***
+ * Test class represent one test, where dog must choose between two pile of dog snacks.
+ * If the dog choose more snack, that mean the dog could understand what see and the theory is true
+ * It will choose the more snacks.
+ */
+public class Test {
 
-public class Test implements ITest {
+    /***
+     * This variable contains how many snacks on the top part of screen.
+     */
+    private int top_number;
+    /***
+     * This variable contains how many snacks on the bot part of screen.
+     */
+    private int bot_number;
+    /***
+     * If the dog choose more pile of snacks it will true, else it will false.
+     */
+    private boolean isChooseBigger;
 
-    private int ChosedMoreSnackNumber;
+    /***
+     * Create a Test Instance without {@link Test#isChooseBigger}.
+     *
+     * @param top_number generated with {@link TestService#getRandomAmountOfSnacks()}.
+     * @param bot_number generated with {@link TestService#getRandomAmountOfSnacks()}.
+     */
+    public Test(int top_number, int bot_number) {
+        this.top_number = top_number;
+        this.bot_number = bot_number;
 
-    public Test(){
-        this.ChosedMoreSnackNumber = 0;
     }
 
-    @Override
-    public double calcPercentage() {
-        return 0;
+    /***
+     *
+     * @return Return with number of snacks on the top screen.
+     */
+    public int getTop_number() {
+        return top_number;
     }
 
-    @Override
-    public int getRandomAmountOfSnacks() {
-        Random rnd = new Random();
-        int max = 6;
-        int min = 1;
-
-        int result = rnd.nextInt((max - min) + 1) + min;
-
-        return result;
+    /***
+     *
+     * @return Return with number of snacks on the bot screen.
+     */
+    public int getBot_number() {
+        return bot_number;
     }
 
-    public void setChosedMoreSnackNumber(int chosedMoreSnackNumber) {
-        ChosedMoreSnackNumber = chosedMoreSnackNumber;
+    /***
+     *
+     * @return If the dog choose more snacks return with true, else false.
+     */
+    public boolean isChooseBigger() {
+        return isChooseBigger;
     }
 
-    public int getChosedMoreSnackNumber(){
-        return this.ChosedMoreSnackNumber;
+    /***
+     * Set the dog "answer".
+     *
+     * @param chooseBigger If the dog choose more snacks set true, else false.
+     */
+    public void setChooseBigger(boolean chooseBigger) {
+        isChooseBigger = chooseBigger;
     }
+
 }

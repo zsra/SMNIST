@@ -2,4 +2,5 @@
     <string name="app_name">SMNIST</string>
     <string name="SMNIST_for_Dogs">SMNIST for Dogs</string>
     <string name="start">start</string>
+    <string name="next">Next</string>
 </resources>
