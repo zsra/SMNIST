@@ -18,6 +18,7 @@ import kotlin.coroutines.suspendCoroutine
 /***
  * The test activity where the test will be running.
  */
+@Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class TestActivity : AppCompatActivity() {
 
     /***
@@ -32,6 +33,10 @@ class TestActivity : AppCompatActivity() {
 
         val testCollector =  TestCollector(20, 5)
         val testService = TestService()
+
+        testCollector.numberOfTest = intent.getStringExtra("TestsNumber").toString().toInt()
+        testCollector.dogAgeInMonth = intent.getStringExtra("DogAge").toString().toInt()
+
 
         runTest(testCollector, testService)
     }
@@ -63,7 +68,7 @@ class TestActivity : AppCompatActivity() {
         var topResourceNumber = service.randomAmountOfSnacks
         var botResourceNumber = service.randomAmountOfSnacks
         // IF these variable are equals, generate a different number to bot ImageView.
-        while(topResourceNumber != botResourceNumber) {
+        while(topResourceNumber == botResourceNumber) {
             botResourceNumber = service.randomAmountOfSnacks
         }
 

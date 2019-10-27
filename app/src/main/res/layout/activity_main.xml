@@ -19,12 +19,27 @@
         android:textAlignment="center"
         android:textSize="32sp" />
 
+    <EditText
+        android:id="@+id/input_dogage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/dog_age_in_month" />
+
+    <EditText
+        android:id="@+id/input_numberoftest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
     <Button
         android:id="@+id/btn_start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="88dip"
-        android:text="@string/start"
+
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="24sp" />
 
