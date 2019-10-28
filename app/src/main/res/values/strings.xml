@@ -1,8 +1,13 @@
 <resources>
     <string name="app_name">SMNIST</string>
     <string name="SMNIST_for_Dogs">SMNIST for Dogs</string>
-    <string name="start">start</string>
+    <string name="start">Start</string>
     <string name="next">Next</string>
-    <string name="dog_age_in_month">Dog Age in Month</string>
-    <string name="number_of_text">Number of Text</string>
+    <string name="number_of_text">Number of Test</string>
+    <string name="test_result">Test Result</string>
+    <string name="finished_tests">Finished Tests:</string>
+    <string name="larger_quantity_selected">Larger quantity selected:</string>
+    <string name="ok">OK</string>
+    <string name="percent">0%</string>
+    <string name="def_val">0</string>
 </resources>

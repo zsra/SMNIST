@@ -1,10 +1,10 @@
 package hu.zsra.smnist
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.r0adkll.slidr.Slidr
 import com.r0adkll.slidr.model.SlidrInterface
@@ -12,8 +12,6 @@ import hu.zsra.smnist.core.Test
 import hu.zsra.smnist.core.TestCollector
 import hu.zsra.smnist.core.TestService
 import kotlinx.android.synthetic.main.activity_test.*
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 /***
  * The test activity where the test will be running.
@@ -21,22 +19,17 @@ import kotlin.coroutines.suspendCoroutine
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class TestActivity : AppCompatActivity() {
 
-    /***
-     * How many test finished in one session.
-     */
-    private var TestIndex = 0
+    var TestIndex = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test)
         confDefault()
 
-        val testCollector =  TestCollector(20, 5)
+
+        //intent.getStringExtra("TestsNumber").toInt()
+        val testCollector = TestCollector(intent.getStringExtra("TestsNumber").toInt())
         val testService = TestService()
-
-        testCollector.numberOfTest = intent.getStringExtra("TestsNumber").toString().toInt()
-        testCollector.dogAgeInMonth = intent.getStringExtra("DogAge").toString().toInt()
-
 
         runTest(testCollector, testService)
     }
@@ -63,16 +56,18 @@ class TestActivity : AppCompatActivity() {
      * Create a new Test. Generate random numbers to get resource file, Reset a
      * background color of the image, set the dog snacks image and add click event lisntener.
      */
-    private fun newTest(collector: TestCollector, service : TestService) {
+    private fun newTest(testCollector: TestCollector, testService: TestService) {
         // GENERATE a random number to get resources.
-        var topResourceNumber = service.randomAmountOfSnacks
-        var botResourceNumber = service.randomAmountOfSnacks
+        var topResourceNumber = testService.randomAmountOfSnacks
+        var botResourceNumber = testService.randomAmountOfSnacks
         // IF these variable are equals, generate a different number to bot ImageView.
         while(topResourceNumber == botResourceNumber) {
-            botResourceNumber = service.randomAmountOfSnacks
+            botResourceNumber = testService.randomAmountOfSnacks
         }
 
         val test = Test(topResourceNumber, botResourceNumber)
+
+        enableButton()
 
         // RESET a background colors.
         imgv_top.setBackgroundColor(Color.TRANSPARENT)
@@ -83,57 +78,76 @@ class TestActivity : AppCompatActivity() {
         setImageBackground(imgv_bot, getImageResourcesRandom(botResourceNumber))
 
         // ADD click event listeners to ImageViews.
-        imgTopClickEventListener(collector, test)
-        imgBotClickEventListener(collector, test)
+        imgTopClickEventListener(testCollector, test)
+        imgBotClickEventListener(testCollector, test)
+
+
     }
 
     /***
      * Set background of ImageView.
      */
     private fun setImageBackground(imgView : ImageView,imageIndex : Int) {
-        imgView.tag = imageIndex
         imgView.setImageResource(imageIndex)
     }
 
     /***
-     * Run tests until the TestIndex not equals with number of tests.
+     * Run tests until the Index not equals with number of tests.
      */
-    private fun runTest(collector: TestCollector, service: TestService) {
+    private fun runTest(testCollector: TestCollector, testService: TestService) {
 
-        newTest(collector, service)
-        TestIndex += 1
-        while(TestIndex < collector.numberOfTest) {
-            //WAIT until the next button not clicked by "test-runner"
-            btn_next.setOnClickListener {
-                newTest(collector, service)
-            }
-            TestIndex += 1
+        if(TestIndex == testCollector.numberOfTest - 1) {
+            showResult(testCollector, testService)
+            TestIndex = 0
         }
-        TestIndex = 0
+        newTest(testCollector, testService)
+        btn_next.setOnClickListener {
+            runTest(testCollector, testService)
+            TestIndex++
+
+        }
     }
 
     /***
      * Set setOnClickListener event on top ImageView.
      */
-    private fun imgTopClickEventListener(collector: TestCollector, test : Test){
+    private fun imgTopClickEventListener(testCollector: TestCollector, test : Test){
         imgv_top.setOnClickListener {
             test.isChooseBigger = test.top_number > test.bot_number
-            collector.AddTestToCollector(test) // ADD test to the collector
+            testCollector.AddTestToCollector(test) // ADD test to the collector
             // SET background to red if the dog choose this.
             imgv_top.setBackgroundResource(R.color.colorTestBackgroundClicked)
+            disableButton()
         }
     }
 
     /***
      * Set setOnClickListener event on bot ImageView.
      */
-    private fun imgBotClickEventListener(collector: TestCollector, test : Test){
+    private fun imgBotClickEventListener(testCollector: TestCollector, test : Test){
         imgv_bot.setOnClickListener {
             test.isChooseBigger = test.top_number < test.bot_number
-            collector.AddTestToCollector(test) // ADD test to the collector
+            testCollector.AddTestToCollector(test) // ADD test to the collector
             // SET background to red if the dog choose this.
             imgv_bot.setBackgroundResource(R.color.colorTestBackgroundClicked)
+            disableButton()
         }
+    }
+
+    /***
+     * Make buttons disable if the dog chosen.
+     */
+    private fun disableButton() {
+        imgv_top.isClickable = false
+        imgv_bot.isClickable = false
+    }
+
+    /***
+     * Make buttons enable if a new test start.
+     */
+    private fun enableButton() {
+        imgv_top.isClickable = true
+        imgv_bot.isClickable = true
     }
 
     /***
@@ -149,5 +163,17 @@ class TestActivity : AppCompatActivity() {
             6 -> return R.drawable.dog_snack6
         }
         return 0
+    }
+
+    /***
+     * After tests finished open the TestActivity.
+     */
+    private fun showResult(testCollector: TestCollector, testService: TestService) {
+        val intent = Intent(applicationContext, ResultActivity::class.java)
+        intent.putExtra("NumberOfTests", testCollector.numberOfTest.toString())
+        intent.putExtra("ChosenMoreSnacks", testService.getAllTestsBigger(testCollector).toString())
+        Log.d("Percent: ", testService.calcPercentage(testCollector).toString())
+        intent.putExtra("Percentage", "%.2f".format(testService.calcPercentage(testCollector)))
+        startActivity(intent)
     }
 }

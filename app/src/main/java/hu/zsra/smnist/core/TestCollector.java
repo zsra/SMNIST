@@ -6,22 +6,10 @@ package hu.zsra.smnist.core;
 public class TestCollector {
 
     /***
-     * Counter of the Group of the Test to write out into json.
-     */
-    private static int idCounter = 1;
-    /***
      * This variable help to put test into {@link TestCollector#Tests}.
      */
-    private static int Index = 0;
+    private int Index;
 
-    /***
-     * The Tests id.
-     */
-    private int Id;
-    /***
-     * How old the dog is.
-     */
-    private int DogAgeInMonth;
     /***
      * This array contains the group of the tests.
      */
@@ -34,16 +22,12 @@ public class TestCollector {
     /***
      * This constructor create instance of the class.
      *
-     * @param dogAgeInMonth Dog age in month.
      * @param numberOfTest The test length.
      */
-    public TestCollector(int dogAgeInMonth, int numberOfTest) {
-        this.Id = idCounter;
-        this.DogAgeInMonth = dogAgeInMonth;
+    public TestCollector(int numberOfTest) {
         this.NumberOfTest = numberOfTest;
         this.Tests = new Test[this.NumberOfTest];
-
-        idCounter++;
+        this.Index = 0;
     }
 
     /***
@@ -56,31 +40,6 @@ public class TestCollector {
             this.Tests[Index] = test;
             Index++;
         }
-    }
-
-    /***
-     *
-     * @return Return with a collector Id.
-     */
-    public int getId() {
-        return Id;
-    }
-
-    /***
-     *
-     * @return Return with a dog ange in month.
-     */
-    public int getDogAgeInMonth() {
-        return DogAgeInMonth;
-    }
-
-    /***
-     * Set the dog age.
-     *
-     * @param dogAgeInMonth Dog age in month.
-     */
-    public void setDogAgeInMonth(int dogAgeInMonth) {
-        DogAgeInMonth = dogAgeInMonth;
     }
 
     /***
@@ -99,12 +58,5 @@ public class TestCollector {
         return NumberOfTest;
     }
 
-    /***
-     * Set number of test.
-     *
-     * @param numberOfTest The test length.
-     */
-    public void setNumberOfTest(int numberOfTest) {
-        NumberOfTest = numberOfTest;
-    }
+
 }

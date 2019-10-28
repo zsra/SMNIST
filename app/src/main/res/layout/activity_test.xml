@@ -12,7 +12,8 @@
 
     <ImageView
         android:id="@+id/imgv_top"
-        style="@style/ImageContainer" />
+        style="@style/ImageContainer"
+        tools:ignore="ContentDescription" />
 
     <View
         android:layout_width="match_parent"
@@ -21,7 +22,8 @@
 
     <ImageView
         android:id="@+id/imgv_bot"
-        style="@style/ImageContainer" />
+        style="@style/ImageContainer"
+        tools:ignore="ContentDescription" />
 
     <Button
         android:id="@+id/btn_next"

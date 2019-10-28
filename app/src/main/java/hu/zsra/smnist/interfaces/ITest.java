@@ -13,7 +13,7 @@ public interface ITest {
      * @param testCollector An instance of  {@link TestCollector}.
      * @return Return with a percentage.
      */
-    double calcPercentage(TestCollector testCollector);
+    float calcPercentage(TestCollector testCollector);
 
     /***
      * Generate a number between 1 - 6 to get a resource file.
@@ -22,6 +22,12 @@ public interface ITest {
      */
     int getRandomAmountOfSnacks();
 
-
+    /***
+     * Collect all true value from Test array from collector and count.
+     *
+     * @param collector This collector will be show in Result.
+     * @return How many times dog chosen more snacks.
+     */
+    int getAllTestsBigger(TestCollector collector);
 
 }

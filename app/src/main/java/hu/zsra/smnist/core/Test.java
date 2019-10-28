@@ -29,7 +29,6 @@ public class Test {
     public Test(int top_number, int bot_number) {
         this.top_number = top_number;
         this.bot_number = bot_number;
-
     }
 
     /***

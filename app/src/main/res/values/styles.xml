@@ -15,6 +15,13 @@
         <item name="android:layout_weight">1</item>
     </style>
 
+    <!-- Result text theme. -->
+    <style name="ResultText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <!-- Smooth slide between home and test activity. -->
     <style name="AppTheme.SlidrActivityTheme">
         <item name="android:windowIsTranslucent">true</item>

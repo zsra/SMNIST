@@ -13,16 +13,8 @@ public class TestService implements ITest {
      * @return Return with a percentage.
      */
     @Override
-    public double calcPercentage(TestCollector testCollector) {
-        int counterOfTrue = 0;
-        for (Test test: testCollector.getTests()) {
-            if(test.isChooseBigger() == true) {
-                counterOfTrue++;
-            }
-        }
-        int result = (counterOfTrue / testCollector.getNumberOfTest()) * 100;
-
-        return result;
+    public float calcPercentage(TestCollector testCollector) {
+        return ((float)getAllTestsBigger(testCollector) / (float)testCollector.getNumberOfTest()) * 100;
     }
 
     /***
@@ -36,7 +28,23 @@ public class TestService implements ITest {
         int max = 6;
         int min = 1;
 
-        int result = rnd.nextInt((max-min) + 1) + min;
+        return rnd.nextInt((max-min) + 1) + min;
+    }
+
+    /***
+     * Collect all true value from Test array from collector and count.
+     *
+     * @param collector This collector will be show in Result.
+     * @return How many times dog chosen more snacks.
+     */
+    @Override
+    public int getAllTestsBigger(TestCollector collector) {
+        int result = 0;
+        for(Test t : collector.getTests()) {
+            if(t.isChooseBigger()) {
+                result++;
+            }
+        }
 
         return result;
     }
